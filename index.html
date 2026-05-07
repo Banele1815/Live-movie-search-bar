@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Movie Search</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <input id="searchInput" placeholder="Search movies..." />
+    <button id="resetBtn">Reset</button>
 
-  <input id="searchInput" placeholder="Search movies..." />
-  <ul id="movieList"></ul>
+    <p id="noResultsMessage">No movies found 🎬</p>
 
-  <script src="script.js"></script>
-</body>
+    <ul id="movieList"></ul>
+
+    <script src="script.js"></script>
+  </body>
 </html>
