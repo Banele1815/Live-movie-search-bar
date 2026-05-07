@@ -6,7 +6,23 @@
 </head>
 <body>
 
-  <input id="searchInput" placeholder="Search movies..." />
+  <div class="search-container">
+    <div class="search-box" id="searchBox">
+      <span class="search-icon">&#9906;</span>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search movies..."
+        maxlength="100"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search for a movie"
+      />
+      <button id="clearBtn" aria-label="Clear search">&#x2715;</button>
+    </div>
+    <p id="searchStatus" aria-live="polite"></p>
+  </div>
+
   <ul id="movieList"></ul>
 
   <script src="script.js"></script>
