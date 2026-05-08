@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+li{
+    background-color: green;
+    padding: 12px;
+}
+=======
 body {
   font-family: Arial;
   background: #0d0d0d;
@@ -86,3 +92,4 @@ body {
 li {
   margin: 6px 0;
 }
+>>>>>>> 40ef8d824ec200866bd68b0218b8c7f6f658b73b

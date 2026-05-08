@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+const searchinput = document.getElementById("searchinput");
+const movies = document.querySelectorAll("#movielist li");
+
+searchinput.addEventListener("input", function () {
+  const searchValue = searchinput.value.toLowerCase();
+
+  movies.forEach(function (movie) {
+    const title = movie.querySelector("span").textContent.toLowerCase();
+
+    if (searchValue !== "" && title.includes(searchValue)) {
+      movie.style.display = "";
+=======
 console.log("App loaded");
 
 // ─── Movie Data ────────────────────────────────────────────────────────────────
@@ -103,9 +116,20 @@ function render(query) {
 }
 
 document.addEventListener("movie:search", function (e) {
-  render(e.detail.query);
+  const query = e.detail.query;
+  let hasResults = false;
+
+  movies.forEach(function (movie) {
+    const text = movie.textContent.toLowerCase();
+    if (query === "" || text.includes(query.toLowerCase())) {
+      movie.style.display = "list-item";
+      hasResults = true;
+    } else {
+      movie.style.display = "none";
+    }
+  });
+
+  noResultsMessage.style.display = hasResults ? "none" : "block";
 });
 
-render("");
-
-// ─── End Filter + Results section ─────────────────────────────────────────────
+// ─── End Teammate's section ───────────────────────────────────────────────────
