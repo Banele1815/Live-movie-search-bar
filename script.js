@@ -1,5 +1,15 @@
 console.log("App loaded");
 
+// ─── Movie Data ────────────────────────────────────────────────────────────────
+
+const MOVIES = [
+  { title: 'Despicable Me', year: 2010, genre: 'Animation · Comedy' },
+  { title: 'Iron Man', year: 2008, genre: 'Action · Superhero' },
+  { title: 'Black Panther', year: 2018, genre: 'Action · Superhero' },
+  { title: 'Boss Baby', year: 2017, genre: 'Animation · Comedy' },
+  { title: 'High School Musical', year: 2006, genre: 'Musical · Drama' },
+];
+
 // ─── Banele: Search Input Component ───────────────────────────────────────────
 
 const searchInput = document.getElementById("searchInput");
@@ -54,26 +64,48 @@ function dispatchSearch(query) {
 // ─── End Banele's section ──────────────────────────────────────────────────────
 
 
-// ─── Teammate: Filter + Results Component ─────────────────────────────────────
+// ─── Kamo's section: Highlight matched text ────────────────────────────────────
 
-const movies = document.querySelectorAll("#movieList li");
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(escaped, 'gi'), match => `<mark>${match}</mark>`);
+}
+
+// ─── Filter + Results Component ────────────────────────────────────────────────
+
+const movieList = document.getElementById("movieList");
 const noResultsMessage = document.getElementById("noResultsMessage");
 
-document.addEventListener("movie:search", function (e) {
-  const query = e.detail.query;
-  let hasResults = false;
+function render(query) {
+  movieList.innerHTML = "";
 
-  movies.forEach(function (movie) {
-    const text = movie.textContent.toLowerCase();
-    if (query === "" || text.includes(query.toLowerCase())) {
-      movie.style.display = "list-item";
-      hasResults = true;
-    } else {
-      movie.style.display = "none";
-    }
+  const filtered = query
+    ? MOVIES.filter(m => m.title.toLowerCase().includes(query.toLowerCase()))
+    : MOVIES;
+
+  if (filtered.length === 0) {
+    noResultsMessage.style.display = "block";
+    return;
+  }
+
+  noResultsMessage.style.display = "none";
+
+  filtered.forEach(function (movie) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>${highlightMatch(movie.title, query)}</strong>
+      <span>(${movie.year})</span>
+      <em>${movie.genre}</em>
+    `;
+    movieList.appendChild(li);
   });
+}
 
-  noResultsMessage.style.display = hasResults ? "none" : "block";
+document.addEventListener("movie:search", function (e) {
+  render(e.detail.query);
 });
 
-// ─── End Teammate's section ───────────────────────────────────────────────────
+render("");
+
+// ─── End Filter + Results section ─────────────────────────────────────────────
