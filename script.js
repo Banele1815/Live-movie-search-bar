@@ -109,7 +109,7 @@ document.addEventListener("movie:search", function (e) {
   render(e.detail.query);
 });
 
-render("");
+render(null);
 
 // ─── End Filter + Results section ─────────────────────────────────────────────
 // ─── End Teammate's section ───────────────────────────────────────────────────
