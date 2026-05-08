@@ -1,26 +1,13 @@
-<<<<<<< HEAD
-const searchinput = document.getElementById("searchinput");
-const movies = document.querySelectorAll("#movielist li");
-
-searchinput.addEventListener("input", function () {
-  const searchValue = searchinput.value.toLowerCase();
-
-  movies.forEach(function (movie) {
-    const title = movie.querySelector("span").textContent.toLowerCase();
-
-    if (searchValue !== "" && title.includes(searchValue)) {
-      movie.style.display = "";
-=======
 console.log("App loaded");
 
 // ─── Movie Data ────────────────────────────────────────────────────────────────
 
 const MOVIES = [
-  { title: 'Despicable Me', year: 2010, genre: 'Animation · Comedy' },
-  { title: 'Iron Man', year: 2008, genre: 'Action · Superhero' },
-  { title: 'Black Panther', year: 2018, genre: 'Action · Superhero' },
-  { title: 'Boss Baby', year: 2017, genre: 'Animation · Comedy' },
-  { title: 'High School Musical', year: 2006, genre: 'Musical · Drama' },
+  { title: 'Despicable Me', year: 2010, genre: 'Animation · Comedy', img: './assets/Despicable.webp' },
+  { title: 'Iron Man', year: 2008, genre: 'Action · Superhero', img: './assets/iron man.jpg' },
+  { title: 'Black Panther', year: 2018, genre: 'Action · Superhero', img: './assets/black panther.jpg' },
+  { title: 'Boss Baby', year: 2017, genre: 'Animation · Comedy', img: './assets/boss baby.jpg' },
+  { title: 'High School Musical', year: 2006, genre: 'Musical · Drama', img: './assets/high school musical.jpg' },
 ];
 
 // ─── Banele: Search Input Component ───────────────────────────────────────────
@@ -107,29 +94,22 @@ function render(query) {
   filtered.forEach(function (movie) {
     const li = document.createElement("li");
     li.innerHTML = `
-      <strong>${highlightMatch(movie.title, query)}</strong>
-      <span>(${movie.year})</span>
-      <em>${movie.genre}</em>
+      <img src="${movie.img}" alt="${movie.title}" />
+      <div>
+        <strong>${highlightMatch(movie.title, query)}</strong>
+        <span>(${movie.year})</span>
+        <em>${movie.genre}</em>
+      </div>
     `;
     movieList.appendChild(li);
   });
 }
 
 document.addEventListener("movie:search", function (e) {
-  const query = e.detail.query;
-  let hasResults = false;
-
-  movies.forEach(function (movie) {
-    const text = movie.textContent.toLowerCase();
-    if (query === "" || text.includes(query.toLowerCase())) {
-      movie.style.display = "list-item";
-      hasResults = true;
-    } else {
-      movie.style.display = "none";
-    }
-  });
-
-  noResultsMessage.style.display = hasResults ? "none" : "block";
+  render(e.detail.query);
 });
 
+render("");
+
+// ─── End Filter + Results section ─────────────────────────────────────────────
 // ─── End Teammate's section ───────────────────────────────────────────────────
