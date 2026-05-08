@@ -3,23 +3,20 @@ console.log("App loaded");
 // ─── Banele: Search Input Component ───────────────────────────────────────────
 
 const searchInput = document.getElementById("searchInput");
-const clearBtn    = document.getElementById("clearBtn");
+const clearBtn = document.getElementById("clearBtn");
 const searchStatus = document.getElementById("searchStatus");
 
 let debounceTimer = null;
 
-// Captures every keystroke via the `input` event
 searchInput.addEventListener("input", function (e) {
   const raw = e.target.value;
   const trimmed = raw.trim();
 
-  // Show/hide clear button
   clearBtn.style.display = raw.length > 0 ? "inline-block" : "none";
 
-  // ── Edge case handling ──────────────────────────────────────────
   if (raw === "") {
     searchStatus.textContent = "";
-    dispatchSearch("");       // signal teammates: input cleared
+    dispatchSearch("");
     return;
   }
 
@@ -33,16 +30,13 @@ searchInput.addEventListener("input", function (e) {
   } else {
     searchStatus.textContent = `Searching for "${trimmed}"…`;
   }
-  // ───────────────────────────────────────────────────────────────
 
-  // Debounce: wait 350ms after user stops typing before firing search
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(function () {
     dispatchSearch(trimmed);
   }, 350);
 });
 
-// Clears the field and resets state
 clearBtn.addEventListener("click", function () {
   searchInput.value = "";
   clearBtn.style.display = "none";
@@ -51,11 +45,6 @@ clearBtn.addEventListener("click", function () {
   dispatchSearch("");
 });
 
-/**
- * dispatchSearch — the handoff point to teammates.
- * Fires a custom event that the results/filter components listen for.
- * @param {string} query - trimmed search string (empty string = cleared)
- */
 function dispatchSearch(query) {
   document.dispatchEvent(
     new CustomEvent("movie:search", { detail: { query } })
@@ -63,3 +52,28 @@ function dispatchSearch(query) {
 }
 
 // ─── End Banele's section ──────────────────────────────────────────────────────
+
+
+// ─── Teammate: Filter + Results Component ─────────────────────────────────────
+
+const movies = document.querySelectorAll("#movieList li");
+const noResultsMessage = document.getElementById("noResultsMessage");
+
+document.addEventListener("movie:search", function (e) {
+  const query = e.detail.query;
+  let hasResults = false;
+
+  movies.forEach(function (movie) {
+    const text = movie.textContent.toLowerCase();
+    if (query === "" || text.includes(query.toLowerCase())) {
+      movie.style.display = "list-item";
+      hasResults = true;
+    } else {
+      movie.style.display = "none";
+    }
+  });
+
+  noResultsMessage.style.display = hasResults ? "none" : "block";
+});
+
+// ─── End Teammate's section ───────────────────────────────────────────────────
