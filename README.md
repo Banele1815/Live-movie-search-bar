@@ -54,7 +54,7 @@ list automatically. Adding a new movie is as simple as adding one line to the
 
 ---
 
-### 2. Search Input Component (Banele)
+### 2. Search Input Component
 
 This section owns everything related to the search box — capturing what the
 user types and deciding what to do with it.
@@ -155,7 +155,7 @@ break the other person's code. The only thing they agreed on is the event name
 
 ---
 
-### 4. Highlight matched text (Kamo)
+### 4. Highlight matched text
 
 ```javascript
 function highlightMatch(text, query) {
@@ -328,23 +328,13 @@ git log --oneline
 ## Common questions
 
 **Why vanilla JS and not React or Vue?**  
-This project is small enough that a framework would add complexity without
-adding value. Vanilla JS also means anyone can open `index.html` directly in a
+Vanilla JS means anyone can open `index.html` directly in a
 browser with no installation or build step required.
 
 **Why use `createElement` instead of writing HTML strings?**  
 The `render()` function uses `createElement` and `innerHTML` together. The
 `innerHTML` on each `<li>` is safe here because the content comes from our own
-`MOVIES` array, not from user input. Never use `innerHTML` with raw user input
-— that opens the door to XSS attacks where malicious code gets injected into
-the page.
-
-**What is XSS?**  
-Cross-Site Scripting. It is when an attacker injects JavaScript into a page
-through an input field. For example if a user typed `<script>alert('hacked')</script>`
-into the search bar and the app rendered that directly as HTML, the script would
-execute. Our app is safe because user input only goes through the filter
-comparison — it never gets written into the DOM directly.
+`MOVIES` array, not from user input. Never use `innerHTML` with raw user input.
 
 **Why are movies hidden on load?**  
 Passing `null` to `render()` on page load keeps the list empty until the user
