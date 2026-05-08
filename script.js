@@ -80,6 +80,11 @@ const noResultsMessage = document.getElementById("noResultsMessage");
 function render(query) {
   movieList.innerHTML = "";
 
+  if (query === null) {
+    noResultsMessage.style.display = "none";
+    return;
+  }
+
   const filtered = query
     ? MOVIES.filter(m => m.title.toLowerCase().includes(query.toLowerCase()))
     : MOVIES;
