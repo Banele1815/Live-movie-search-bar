@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,3 +37,35 @@
 
 </body>
 </html>
+=======
+<!doctype html>
+<html>
+  <head>
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+<div class="search-container">
+    <div class="search-box" id="searchBox">
+      <span class="search-icon">&#9906;</span>
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search movies..."
+        maxlength="100"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search for a movie"
+      />
+      <button id="clearBtn" aria-label="Clear search">&#x2715;</button>
+    </div>
+    <p id="searchStatus" aria-live="polite"></p>
+  </div>
+
+  <ul id="movieList"></ul>
+  <p id="noResultsMessage">No movies found 🎬</p>
+
+  <script src="script.js"></script>
+  </body>
+</html>
+>>>>>>> 40ef8d824ec200866bd68b0218b8c7f6f658b73b
