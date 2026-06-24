@@ -85,9 +85,14 @@ function render(query) {
     return;
   }
 
-  const filtered = query
-    ? MOVIES.filter(m => m.title.toLowerCase().includes(query.toLowerCase()))
-    : MOVIES;
+if (!query) {
+  noResultsMessage.style.display = "none";
+  return; // stop rendering anything
+}
+
+const filtered = MOVIES.filter(m =>
+  m.title.toLowerCase().includes(query.toLowerCase())
+);
 
   if (filtered.length === 0) {
     noResultsMessage.style.display = "block";
